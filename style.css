@@ -1,18 +1,14 @@
-body {
-    margin: 0;
-    padding: 0;
-    text-align: center;
+body 
+{
+    background-color: powderblue;
 }
 
-h1 {
-    padding-top: 4em;
+h1   
+{
+    color: blue;
 }
 
-p {
-    margin: 2em 0;
-}
-
-img {
-    width: 40em;
-    max-width: 90%;
+p    
+{
+    color: red;
 }
