@@ -1,14 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Pages</title>
-    <link rel="stylesheet" href="style.css">
+	<style>
+		body {
+		  background: black;
+		  color: white;
+		}
+
+		pre code {
+		  font: 11pt/1.25 Monaco, monospace;
+		}
+
+		.debug { color: Snow; }
+		.info  { color: LawnGreen; }
+		.warn  { color: GoldenRod; }
+		.error { color: LightCoral; }
+		body {
+		  background: #111;
+		}
+		.hidden {
+		  opacity:0;
+		}
+		.console-container {
+		 
+		  font-family:Monaco, monospace;
+		  font-size:1em;
+		  text-align:center;
+		  height:200px;
+		  width:600px;
+		  display:block;
+		  position:absolute;
+		  color:white;
+		  top:0;
+		  bottom:0;
+		  left:0;
+		  right:0;
+		  margin:auto;
+		}
+		.console-underscore {
+		   display:inline-block;
+		  position:relative;
+		  top:-0.14em;
+		  left:10px;
+		}
+	</style>
 </head>
-<body style="background-color:Black;">
-    <h1>Hello World!</h1>
-    <p>I am Kasper !</p>
-</body>
+	<body class="body">
+		<div class='console-container'><span id='text'></span><div class='console-underscore' id='console'>&#95;</div></div>
+		
+		<pre><code id="count"></code></pre>
+		
+		<pre><code id="myCode"></code></pre>
+	</body>
+	
+    <script type="text/javascript">   
+		 consoleText(['LADIES AND GENTLEMEN', 'WELCOME!', '...', 'HALLO?', 'ARE YOU THERE?', '...', 'NEO', 'GUESS NOT', 'ERROR', '   ', 'KIDDING', 'WELCOME TO', 'LazyIT'], 'text',['LawnGreen', 'LawnGreen', 'LawnGreen', 'LawnGreen', 'LawnGreen', 'LawnGreen', 'LawnGreen', 'LawnGreen', 'LightCoral', 'LightCoral', 'LawnGreen', 'LawnGreen', 'LawnGreen']);
+
+		function consoleText(words, id, colors) 
+		{
+		  if (colors === undefined) colors = ['#fff'];
+		  var visible = true;
+		  var con = document.getElementById('console');
+		  var letterCount = 1;
+		  var x = 1;
+		  var waiting = false;
+		  var target = document.getElementById(id)
+		  var wordsWritten = 0;
+		  
+		  target.setAttribute('style', 'color:' + colors[0])
+		  
+		  var interval = window.setInterval(function() 
+		  {
+			if (letterCount === 0 && waiting === false) 
+			{
+			  waiting = true;
+			  target.innerHTML = words[0].substring(0, letterCount)
+			  window.setTimeout(function() {
+				var usedColor = colors.shift();
+				colors.push(usedColor);
+				var usedWord = words.shift();
+				words.push(usedWord);
+				x = 1;
+				target.setAttribute('style', 'color:' + colors[0])
+				letterCount += x;
+				wordsWritten++;
+				waiting = false;
+			  }, 1000)
+			} 
+			else if (letterCount === words[0].length + 1 && waiting === false) 
+			{
+			  waiting = true;
+			  window.setTimeout(function() {
+				x = -1;
+				letterCount += x;
+				wordsWritten++;
+				waiting = false;
+			  }, 1000)
+			} 
+			else if (waiting === false) 
+			{
+			  target.innerHTML = words[0].substring(0, letterCount)
+			  letterCount += x;
+			  wordsWritten++;
+			}
+			
+			if (wordsWritten >= 212)
+			{
+				window.clearInterval(interval);
+				window.setTimeout(1000);
+				document.getElementById("myCode").innerHTML += "<span class=\"info\"> > LazyIT</span>\r\n"
+				document.getElementById("myCode").innerHTML += "<span class=\"info\"> > Kasper Dyhrberg Laursen</span>"
+			}
+			<!-- else -->
+			<!-- { -->
+				<!-- document.getElementById("count").innerHTML = wordsWritten -->
+			<!-- } -->
+		  }, 12)
+		  
+		  window.setInterval(function() 
+		  {
+			if (visible === true) 
+			{
+			  con.className = 'console-underscore hidden'
+			  visible = false;
+
+			} 
+			else 
+			{
+			  con.className = 'console-underscore'
+
+			  visible = true;
+			}
+		  }, 400)
+		}
+	</script>
 </html>
